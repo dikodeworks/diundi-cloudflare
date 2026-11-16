@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>DiUndi. — by DikodeWorks</title>
+  <meta name="description" content="DiUndi. — putar daftar undian hadiah, pilihan makanan, dan tempat nongkrong. Biar nggak bingung lagi kalau ditanya &quot;terserah&quot;." />
+  <meta name="theme-color" content="#FBFBFC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="DiUndi" />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-head">
+    <div class="head-in">
+      <div class="brand">
+        <span class="brand-name">DiUndi<span class="dot dot-blink">.</span></span>
+        <span class="brand-by">by DikodeWorks<span class="dot">.</span></span>
+      </div>
+      <div class="head-actions">
+        <button id="soundBtn" class="icon-btn" type="button" aria-pressed="true" aria-label="Matikan suara" title="Suara">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6.5 8.5H3.5v7h3L11 19z" fill="currentColor" stroke="none" />
+            <path class="wave" d="M15.2 8.6a4.8 4.8 0 0 1 0 6.8" />
+            <path class="wave" d="M18 6a8.4 8.4 0 0 1 0 12" />
+            <path class="mute" d="m16 9.5 5 5" />
+            <path class="mute" d="m21 9.5-5 5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <p class="lede">Putar daftar undian, pilihan makanan, atau tempat nongkrong. Nggak usah debat lagi.</p>
+
+    <div class="stage">
+      <section class="spin-card" aria-label="Kotak putar">
+        <div class="mode-switch" id="modeSwitch" role="group" aria-label="Mode putar">
+          <button type="button" data-mode="undian" aria-pressed="true">Undian</button>
+          <button type="button" data-mode="makanan" aria-pressed="false">Makanan</button>
+          <button type="button" data-mode="tempat" aria-pressed="false">Tempat</button>
+        </div>
+
+        <div class="presets" id="presets" hidden></div>
+
+        <div class="reel" id="reel">
+          <div class="reel-window" id="reelWindow">
+            <div class="reel-track" id="reelTrack"></div>
+          </div>
+          <span class="reel-dot" aria-hidden="true"></span>
+          <p class="reel-empty" id="reelEmpty" hidden>Tambahkan peserta</p>
+        </div>
+
+        <p class="spin-meta" id="spinMeta">Memuat…</p>
+
+        <div class="prize-picker" id="prizePicker">
+          <label class="prize-picker-label" for="prizeSelect">Hadiah diputar</label>
+          <span class="select-wrap">
+            <select id="prizeSelect"></select>
+            <svg class="select-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="result" id="result" aria-live="polite">
+          <p class="result-empty">Hasil putaran muncul di sini.</p>
+        </div>
+
+        <div class="spin-actions">
+          <button id="spinBtn" class="spin-btn" type="button" aria-label="Putar">
+            <span id="spinLabel">Putar</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel-card">
+        <div class="tabs" id="tabs" role="group" aria-label="Daftar undian">
+          <button type="button" data-tab="peserta">
+            <span>Peserta</span><span class="count" id="countPeserta">0</span>
+          </button>
+          <button type="button" data-tab="hadiah">
+            <span>Hadiah</span><span class="count" id="countHadiah">0</span>
+          </button>
+          <button type="button" data-tab="pemenang">
+            <span>Pemenang</span><span class="count" id="countPemenang">0</span>
+          </button>
+        </div>
+
+        <div class="panel-body">
+          <div class="panel-head">
+            <h2 class="panel-title" id="panelTitle">Peserta</h2>
+            <button class="link danger" id="clearWinnersBtn" type="button" hidden>Hapus riwayat</button>
+          </div>
+
+          <form id="addForm" class="add-form">
+            <input id="addInput" type="text" maxlength="40" placeholder="Tambah peserta…" aria-label="Tambah peserta" autocomplete="off" />
+            <button type="submit" class="btn">Tambah</button>
+          </form>
+
+          <ul class="list" id="list"></ul>
+
+          <p class="note" id="panelNote"></p>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="foot">&copy; 2026 DikodeWorks<span class="dot">.</span> All rights reserved.</footer>
+
+  <dialog id="winModal" class="modal">
+    <div class="modal-inner">
+      <p class="kicker">Pemenang</p>
+      <h2 id="winName">—</h2>
+      <p class="win-prize" id="winPrize">—</p>
+      <div class="modal-actions">
+        <button id="againBtn" class="btn light" type="button">Putar lagi</button>
+        <button id="doneBtn" class="btn" type="button">Selesai</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
